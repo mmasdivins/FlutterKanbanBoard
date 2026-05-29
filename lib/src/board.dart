@@ -38,6 +38,7 @@ class KanbanBoard extends StatefulWidget {
     this.groups = const [],
     required this.groupItemBuilder,
     this.groupDecoration,
+    this.groupDecorationBuilder,
     this.groupHeaderBuilder,
     this.groupFooterBuilder,
     this.groupGhost,
@@ -84,6 +85,9 @@ class KanbanBoard extends StatefulWidget {
 
   /// This is the decoration for the group.
   final Decoration? groupDecoration;
+
+  /// Per-group decoration builder. If provided, takes precedence over [groupDecoration].
+  final Decoration? Function(String groupId)? groupDecorationBuilder;
 
   /// This is the builder for the group-header.
   /// pass the [context], [groupId] to the builder.
@@ -148,6 +152,7 @@ class _KanbanBoardState extends State<KanbanBoard> {
         groupGhost: widget.groupGhost,
         itemGhost: widget.itemGhost,
         boardScrollController: widget.boardScrollController,
+        groupDecorationBuilder: widget.groupDecorationBuilder,
       ),
     );
   }
@@ -164,6 +169,7 @@ class Board extends ConsumerStatefulWidget {
     this.groupScrollConfig,
     this.boardDecoration,
     this.groupDecoration,
+    this.groupDecorationBuilder,
     this.trailing,
     this.leading,
     this.groupConstraints = const BoxConstraints(maxWidth: 300),
@@ -184,6 +190,7 @@ class Board extends ConsumerStatefulWidget {
   final ScrollConfig? groupScrollConfig;
   final Decoration? boardDecoration;
   final Decoration? groupDecoration;
+  final Decoration? Function(String groupId)? groupDecorationBuilder;
   final Widget? trailing;
   final Widget? leading;
   final BoxConstraints groupConstraints;
@@ -355,6 +362,7 @@ class _BoardState extends ConsumerState<Board> {
                 header: widget.groupHeaderBuilder,
                 footer: widget.groupFooterBuilder,
                 groupDecoration: widget.groupDecoration,
+                groupDecorationBuilder: widget.groupDecorationBuilder,
                 groupConstraints: widget.groupConstraints,
                 boardStateController: _boardStateController,
                 groupItemStateController: _groupItemStateController,

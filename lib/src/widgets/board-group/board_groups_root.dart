@@ -18,6 +18,7 @@ class BoardGroupsRoot extends ConsumerStatefulWidget {
     required this.groupItemStateController,
     required this.groupStateController,
     required this.boardScrollController,
+    this.groupDecorationBuilder,
     this.header,
     this.footer,
     super.key,
@@ -32,6 +33,7 @@ class BoardGroupsRoot extends ConsumerStatefulWidget {
   final Widget? leading;
   final BoxConstraints groupConstraints;
   final Decoration? groupDecoration;
+  final Decoration? Function(String groupId)? groupDecorationBuilder;
   final GroupItemBuilder groupItemBuilder;
   final GroupHeaderBuilder? header;
   final GroupFooterBuilder? footer;
@@ -67,7 +69,9 @@ class _BoardGroupsRootState extends ConsumerState<BoardGroupsRoot> {
                   header: widget.header,
                   footer: widget.footer,
                   itemBuilder: widget.groupItemBuilder,
-                  groupDecoration: widget.groupDecoration,
+                  groupDecoration: widget.groupDecorationBuilder != null
+                      ? widget.groupDecorationBuilder!(groups[index].id)
+                      : widget.groupDecoration,
                   boardStateController: widget.boardStateController,
                   groupIndex: index,
                   groupConstraints: widget.groupConstraints,
