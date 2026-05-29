@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kanban/constants/kanban_data.dart';
 import 'package:kanban_board/kanban_board.dart';
@@ -50,7 +51,6 @@ class _KanbanCanvasState extends State<KanbanCanvas> {
                   height: 100,
                   width: 100,
                 ),
-                
                 groupItemBuilder: groupItemBuilder,
               ),
             )
@@ -61,20 +61,20 @@ class _KanbanCanvasState extends State<KanbanCanvas> {
   }
 
   Widget get ghost => DottedBorder(
-        child: const Center(
-          child: Text(
-            "Drop your task here",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+    child: const Center(
+      child: Text(
+        "Drop your task here",
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
         ),
-      );
+      ),
+    ),
+  );
 
   Widget groupHeaderBuilder(BuildContext context, String groupId) {
     final groupIndex =
-        kanbanGroups.indexWhere((element) => element.id == groupId);
+    kanbanGroups.indexWhere((element) => element.id == groupId);
     final group = kanbanGroups[groupIndex];
     return ListHeader(
       stateColor: group.customData?.color ?? Colors.transparent,
@@ -84,7 +84,7 @@ class _KanbanCanvasState extends State<KanbanCanvas> {
 
   Widget groupItemBuilder(BuildContext context, String groupId, int itemIndex) {
     final groupIndex =
-        kanbanGroups.indexWhere((element) => element.id == groupId);
+    kanbanGroups.indexWhere((element) => element.id == groupId);
     final groupItem = kanbanGroups[groupIndex].items[itemIndex];
     return GroupCard(
       title: groupItem.title,
@@ -97,12 +97,12 @@ class _KanbanCanvasState extends State<KanbanCanvas> {
   }
 
   double get groupWidth =>
-      Platform.isWindows || Platform.isLinux || Platform.isMacOS
+      kIsWeb || Platform.isWindows || Platform.isLinux || Platform.isMacOS
           ? 350
           : MediaQuery.sizeOf(context).width * 0.8;
 
   BoxConstraints get groupConstraints => BoxConstraints(
-        minWidth: groupWidth,
-        maxWidth: groupWidth,
-      );
+    minWidth: groupWidth,
+    maxWidth: groupWidth,
+  );
 }

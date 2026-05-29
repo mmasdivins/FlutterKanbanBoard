@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kanban_board/src/constants/scroll_config_constants.dart';
 import 'package:kanban_board/src/controllers/states/scroll_state.dart';
 
 class PlatformScrollConfiguration {
   static GroupScrollConfig get groupScrollConfig {
-    if (Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
+    if (kIsWeb || Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
       return const GroupScrollConfig(
         curve: Curves.linear,
         farBoundary: Boundary(
@@ -47,7 +48,7 @@ class PlatformScrollConfiguration {
   }
 
   static BoardScrollConfig get boardScrollConfig {
-    if (Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
+    if (kIsWeb || Platform.isMacOS || Platform.isLinux || Platform.isWindows) {
       return const BoardScrollConfig(
         curve: Curves.linear,
         farBoundary: Boundary(

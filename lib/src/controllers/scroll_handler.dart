@@ -13,8 +13,8 @@ class ScrollHandler {
     return velocity == ScrollVelocity.slow
         ? scrollConfig.farBoundary.duration
         : velocity == ScrollVelocity.medium
-            ? scrollConfig.midBoundary.duration
-            : scrollConfig.nearBoundary.duration;
+        ? scrollConfig.midBoundary.duration
+        : scrollConfig.nearBoundary.duration;
   }
 
   static double getOffsetToMove(
@@ -22,8 +22,8 @@ class ScrollHandler {
     return velocity == ScrollVelocity.fast
         ? scrollConfig.nearBoundary.offset
         : velocity == ScrollVelocity.medium
-            ? scrollConfig.midBoundary.offset
-            : scrollConfig.farBoundary.offset;
+        ? scrollConfig.midBoundary.offset
+        : scrollConfig.farBoundary.offset;
   }
 
   static ScrollVelocity getVelocity(
@@ -34,18 +34,18 @@ class ScrollHandler {
     if (axisDirection == AxisDirection.down ||
         axisDirection == AxisDirection.right) {
       return draggingWidgetPosition >
-              maxViewport - scrollConfig.farBoundary.boundary
+          maxViewport - scrollConfig.farBoundary.boundary
           ? ScrollVelocity.fast
           : draggingWidgetPosition >
-                  maxViewport - scrollConfig.midBoundary.boundary
-              ? ScrollVelocity.medium
-              : ScrollVelocity.slow;
+          maxViewport - scrollConfig.midBoundary.boundary
+          ? ScrollVelocity.medium
+          : ScrollVelocity.slow;
     } else {
       return draggingWidgetPosition < scrollConfig.farBoundary.boundary
           ? ScrollVelocity.fast
           : draggingWidgetPosition < scrollConfig.midBoundary.boundary
-              ? ScrollVelocity.medium
-              : ScrollVelocity.slow;
+          ? ScrollVelocity.medium
+          : ScrollVelocity.slow;
     }
   }
 
@@ -83,24 +83,24 @@ class ScrollHandler {
       /// [velocity] is used to determine the speed of the scroll.
       /// It is based on the distance of the dragging widget to the end of the viewport.
       final velocity = draggingWidgetBottomPosition >
-              maxViewport - scrollConfig.nearBoundary.boundary
+          maxViewport - scrollConfig.nearBoundary.boundary
           ? ScrollVelocity.fast
           : draggingWidgetBottomPosition >
-                  maxViewport - scrollConfig.midBoundary.boundary
-              ? ScrollVelocity.medium
-              : ScrollVelocity.slow;
+          maxViewport - scrollConfig.midBoundary.boundary
+          ? ScrollVelocity.medium
+          : ScrollVelocity.slow;
 
       final offset = velocity == ScrollVelocity.fast
           ? scrollConfig.nearBoundary.offset
           : velocity == ScrollVelocity.medium
-              ? scrollConfig.midBoundary.offset
-              : scrollConfig.farBoundary.offset;
+          ? scrollConfig.midBoundary.offset
+          : scrollConfig.farBoundary.offset;
 
       final duration = velocity == ScrollVelocity.fast
           ? scrollConfig.nearBoundary.duration
           : velocity == ScrollVelocity.medium
-              ? scrollConfig.midBoundary.duration
-              : scrollConfig.farBoundary.duration;
+          ? scrollConfig.midBoundary.duration
+          : scrollConfig.farBoundary.duration;
 
       final jump = offset + scrollController.offset;
 
@@ -154,24 +154,24 @@ class ScrollHandler {
       /// [velocity] is used to determine the speed of the scroll.
       /// It is based on the distance of the dragging widget to the end of the viewport.
       final velocity = draggingWidgetTopPosition <
-              minViewport + scrollConfig.nearBoundary.boundary
+          minViewport + scrollConfig.nearBoundary.boundary
           ? ScrollVelocity.fast
           : draggingWidgetTopPosition <
-                  minViewport + scrollConfig.midBoundary.boundary
-              ? ScrollVelocity.medium
-              : ScrollVelocity.slow;
+          minViewport + scrollConfig.midBoundary.boundary
+          ? ScrollVelocity.medium
+          : ScrollVelocity.slow;
 
       final offset = velocity == ScrollVelocity.fast
           ? scrollConfig.nearBoundary.offset
           : velocity == ScrollVelocity.medium
-              ? scrollConfig.midBoundary.offset
-              : scrollConfig.farBoundary.offset;
+          ? scrollConfig.midBoundary.offset
+          : scrollConfig.farBoundary.offset;
 
       final duration = velocity == ScrollVelocity.fast
           ? scrollConfig.nearBoundary.duration
           : velocity == ScrollVelocity.medium
-              ? scrollConfig.midBoundary.duration
-              : scrollConfig.farBoundary.duration;
+          ? scrollConfig.midBoundary.duration
+          : scrollConfig.farBoundary.duration;
 
       final jump = scrollController.offset - offset;
 
@@ -230,23 +230,23 @@ class ScrollHandler {
       /// [velocity] is used to determine the speed of the scroll.
       /// It is based on the distance of the dragging widget to the end of the viewport.
       final velocity = draggingWidgetRightPosition >
-              maxViewport - scrollConfig.nearBoundary.boundary
+          maxViewport - scrollConfig.nearBoundary.boundary
           ? ScrollVelocity.fast
           : draggingWidgetRightPosition >
-                  maxViewport - scrollConfig.midBoundary.boundary
-              ? ScrollVelocity.medium
-              : ScrollVelocity.slow;
+          maxViewport - scrollConfig.midBoundary.boundary
+          ? ScrollVelocity.medium
+          : ScrollVelocity.slow;
       final offset = velocity == ScrollVelocity.fast
           ? scrollConfig.nearBoundary.offset
           : velocity == ScrollVelocity.medium
-              ? scrollConfig.midBoundary.offset
-              : scrollConfig.farBoundary.offset;
+          ? scrollConfig.midBoundary.offset
+          : scrollConfig.farBoundary.offset;
 
       final duration = velocity == ScrollVelocity.fast
           ? scrollConfig.nearBoundary.duration
           : velocity == ScrollVelocity.medium
-              ? scrollConfig.midBoundary.duration
-              : scrollConfig.farBoundary.duration;
+          ? scrollConfig.midBoundary.duration
+          : scrollConfig.farBoundary.duration;
 
       final jump = offset + scrollController.offset;
       scrollController
@@ -297,24 +297,24 @@ class ScrollHandler {
       /// [velocity] is used to determine the speed of the scroll.
       /// It is based on the distance of the dragging widget to the end of the viewport.
       final velocity = draggingWidgetLeftPosition <
-              minViewport + scrollConfig.nearBoundary.boundary
+          minViewport + scrollConfig.nearBoundary.boundary
           ? ScrollVelocity.fast
           : draggingWidgetLeftPosition <
-                  minViewport + scrollConfig.midBoundary.boundary
-              ? ScrollVelocity.medium
-              : ScrollVelocity.slow;
+          minViewport + scrollConfig.midBoundary.boundary
+          ? ScrollVelocity.medium
+          : ScrollVelocity.slow;
 
       final offset = velocity == ScrollVelocity.fast
           ? scrollConfig.nearBoundary.offset
           : velocity == ScrollVelocity.medium
-              ? scrollConfig.midBoundary.offset
-              : scrollConfig.farBoundary.offset;
+          ? scrollConfig.midBoundary.offset
+          : scrollConfig.farBoundary.offset;
 
       final duration = velocity == ScrollVelocity.fast
           ? scrollConfig.nearBoundary.duration
           : velocity == ScrollVelocity.medium
-              ? scrollConfig.midBoundary.duration
-              : scrollConfig.farBoundary.duration;
+          ? scrollConfig.midBoundary.duration
+          : scrollConfig.farBoundary.duration;
 
       final jump = scrollController.offset - offset;
 
@@ -348,20 +348,23 @@ class GroupScrollHandler {
     required void Function(bool value) setScrolling,
   }) async {
     final defaultScrollConfig = PlatformScrollConfiguration.groupScrollConfig;
-    await ScrollHandler._downsideScroll(
-      boardState: boardState,
-      scrollConfig: scrollConfig ?? defaultScrollConfig,
-      scrollController: scrollController,
-      isScrolling: isScrolling,
-      setScrolling: setScrolling,
-    );
-    await ScrollHandler._upsideScroll(
-      boardState: boardState,
-      scrollConfig: scrollConfig ?? defaultScrollConfig,
-      scrollController: scrollController,
-      isScrolling: isScrolling,
-      setScrolling: setScrolling,
-    );
+
+    if (scrollController.hasClients) {
+      await ScrollHandler._downsideScroll(
+        boardState: boardState,
+        scrollConfig: scrollConfig ?? defaultScrollConfig,
+        scrollController: scrollController,
+        isScrolling: isScrolling,
+        setScrolling: setScrolling,
+      );
+      await ScrollHandler._upsideScroll(
+        boardState: boardState,
+        scrollConfig: scrollConfig ?? defaultScrollConfig,
+        scrollController: scrollController,
+        isScrolling: isScrolling,
+        setScrolling: setScrolling,
+      );
+    }
   }
 }
 

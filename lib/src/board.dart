@@ -124,9 +124,7 @@ class _KanbanBoardState extends State<KanbanBoard> {
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
-        child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Board(
+      child: Board(
         groups: widget.groups,
         groupItemBuilder: widget.groupItemBuilder,
         controller: widget.controller,
@@ -144,7 +142,7 @@ class _KanbanBoardState extends State<KanbanBoard> {
         groupGhost: widget.groupGhost,
         itemGhost: widget.itemGhost,
       ),
-    ));
+    );
   }
 }
 
@@ -198,7 +196,7 @@ class _BoardState extends ConsumerState<Board> {
   /// [_boardStateController] is the controller to manage the state of the board.
   late ChangeNotifierProvider<BoardStateController> _boardStateController;
   late ChangeNotifierProvider<GroupItemStateController>
-      _groupItemStateController;
+  _groupItemStateController;
   late ChangeNotifierProvider<GroupStateController> _groupStateController;
 
   /// [_getBoardOffset] is used to compute the offset of the board.
@@ -216,7 +214,7 @@ class _BoardState extends ConsumerState<Board> {
     final boardState = ref.read(_boardStateController);
     // Group Scroll Listener
     _boardScrollController.addListener(
-      () {
+          () {
         if (boardState.isScrolling) {
           /// This is to notify newly group-items came into view.
           /// about the dragging widget position & calculate their position & size to show placeholder.
@@ -267,7 +265,7 @@ class _BoardState extends ConsumerState<Board> {
   void initState() {
     ///Initializing the [BoardStateController] provider.
     _boardStateController = ChangeNotifierProvider<BoardStateController>(
-      (ref) => BoardStateController(
+          (ref) => BoardStateController(
         groups: _initializeBoardGroups(),
         controller: widget.controller,
       ),
@@ -288,12 +286,12 @@ class _BoardState extends ConsumerState<Board> {
     ///It is used to manage the state of the group-item.
     _groupItemStateController =
         ChangeNotifierProvider<GroupItemStateController>(
-            (ref) => GroupItemStateController(ref.read(_boardStateController)));
+                (ref) => GroupItemStateController(ref.read(_boardStateController)));
 
     ///Initializing the [BoardListProvider] provider.
     ///It is used to manage the state of the group.
     _groupStateController = ChangeNotifierProvider<GroupStateController>(
-        (ref) => GroupStateController(ref.read(_boardStateController)));
+            (ref) => GroupStateController(ref.read(_boardStateController)));
 
     _activateBoardScrollListeners();
     super.initState();
@@ -308,10 +306,15 @@ class _BoardState extends ConsumerState<Board> {
   }
 
   @override
+  void dispose() {
+    _boardScrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) => _getBoardOffset());
     return Scaffold(
-      backgroundColor: Colors.white,
       body: KanbanGestureListener(
         boardgroupController: _groupStateController,
         boardStateController: _boardStateController,
@@ -320,10 +323,6 @@ class _BoardState extends ConsumerState<Board> {
         onGroupItemMove: widget.onGroupItemMove,
         onGroupMove: widget.onGroupMove,
         child: Container(
-          padding: const EdgeInsets.only(
-            top: BOARD_PADDING,
-            left: BOARD_PADDING,
-          ),
           decoration: widget.boardDecoration,
           child: Stack(
             fit: StackFit.passthrough,
