@@ -48,6 +48,7 @@ class KanbanBoard extends StatefulWidget {
     this.leading,
     this.groupConstraints = const BoxConstraints(maxWidth: 300),
     this.newCardWidget,
+    this.boardScrollController,
     super.key,
   });
 
@@ -116,6 +117,11 @@ class KanbanBoard extends StatefulWidget {
   /// It's a builder for the new item added in
   final Widget Function(BuildContext, String, String)? newCardWidget;
 
+  /// Optional external scroll controller for the board's horizontal scroll.
+  /// When provided, the board uses this controller instead of an internal one,
+  /// allowing the caller to attach scrollbars or programmatically control scrolling.
+  final ScrollController? boardScrollController;
+
   @override
   State<KanbanBoard> createState() => _KanbanBoardState();
 }
@@ -141,6 +147,7 @@ class _KanbanBoardState extends State<KanbanBoard> {
         groupFooterBuilder: widget.groupFooterBuilder,
         groupGhost: widget.groupGhost,
         itemGhost: widget.itemGhost,
+        boardScrollController: widget.boardScrollController,
       ),
     );
   }
@@ -165,6 +172,7 @@ class Board extends ConsumerStatefulWidget {
     this.groupGhost,
     this.itemGhost,
     this.newCardWidget,
+    this.boardScrollController,
     super.key,
   });
   final List<KanbanBoardGroup> groups;
@@ -184,6 +192,7 @@ class Board extends ConsumerStatefulWidget {
   final Widget? groupGhost;
   final Widget? itemGhost;
   final Widget? newCardWidget;
+  final ScrollController? boardScrollController;
 
   @override
   ConsumerState<Board> createState() => _BoardState();
@@ -191,7 +200,9 @@ class Board extends ConsumerStatefulWidget {
 
 class _BoardState extends ConsumerState<Board> {
   /// [_boardScrollController] is the controller for the board scroll.
-  final ScrollController _boardScrollController = ScrollController();
+  /// Uses the external controller if provided, otherwise creates an internal one.
+  late final ScrollController _boardScrollController;
+  late final bool _ownsScrollController;
 
   /// [_boardStateController] is the controller to manage the state of the board.
   late ChangeNotifierProvider<BoardStateController> _boardStateController;
@@ -263,6 +274,14 @@ class _BoardState extends ConsumerState<Board> {
 
   @override
   void initState() {
+    if (widget.boardScrollController != null) {
+      _boardScrollController = widget.boardScrollController!;
+      _ownsScrollController = false;
+    } else {
+      _boardScrollController = ScrollController();
+      _ownsScrollController = true;
+    }
+
     ///Initializing the [BoardStateController] provider.
     _boardStateController = ChangeNotifierProvider<BoardStateController>(
           (ref) => BoardStateController(
@@ -307,15 +326,16 @@ class _BoardState extends ConsumerState<Board> {
 
   @override
   void dispose() {
-    _boardScrollController.dispose();
+    if (_ownsScrollController) {
+      _boardScrollController.dispose();
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) => _getBoardOffset());
-    return Scaffold(
-      body: KanbanGestureListener(
+    return KanbanGestureListener(
         boardgroupController: _groupStateController,
         boardStateController: _boardStateController,
         groupItemController: _groupItemStateController,
@@ -351,7 +371,6 @@ class _BoardState extends ConsumerState<Board> {
             ],
           ),
         ),
-      ),
     );
   }
 }

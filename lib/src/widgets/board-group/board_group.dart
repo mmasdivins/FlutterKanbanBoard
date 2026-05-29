@@ -167,7 +167,7 @@ class _BoardGroupState extends ConsumerState<BoardGroup> {
                           /// This renders the list of items in the group.
                           Flexible(
                             child: ListView.builder(
-                              shrinkWrap: true,
+                              shrinkWrap: false,
                               controller: _scrollController,
                               itemCount: group.items.length,
                               itemBuilder: (ctx, index) {
