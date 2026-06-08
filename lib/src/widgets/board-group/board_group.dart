@@ -96,12 +96,14 @@ class _BoardGroupState extends ConsumerState<BoardGroup> {
 
   @override
   void initState() {
-    _scrollController = ref
-        .read(widget.boardStateController)
-        .groups[widget.groupIndex]
-        .scrollController;
+    final boardState = ref.read(widget.boardStateController);
+    _scrollController = boardState.groups[widget.groupIndex].scrollController;
     _activateBoardGroupScrollListeners();
-
+    // Registrem el controller real (l'adjuntat al ListView) al KanbanBoardController
+    // perquè es pugui accedir-hi externament sense dependre de boardState.groups[i].scrollController
+    // que canvia en cada _initializeBoardGroups però el ListView sempre usa aquest.
+    final groupId = boardState.groups[widget.groupIndex].id;
+    boardState.controller.groupScrollControllers[groupId] = _scrollController;
     super.initState();
   }
 

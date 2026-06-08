@@ -13,6 +13,14 @@ class KanbanBoardController {
   /// operations include adding a [group], adding a [group-item], etc.
   KanbanBoardController() : boardId = const Uuid().v4();
 
+  /// Mapa groupId -> ScrollController real adjuntat al ListView de cada grup.
+  /// S'actualitza des de _BoardGroupState.initState cada vegada que el widget
+  /// es munta (també després de reconstruccions per canvi de grups).
+  final Map<String, ScrollController> groupScrollControllers = {};
+
+  ScrollController? getGroupScrollController(String groupId) =>
+      groupScrollControllers[groupId];
+
   /// [addGroup] adds a group to the board.
   void addGroup(String id, dynamic groupData) {}
 

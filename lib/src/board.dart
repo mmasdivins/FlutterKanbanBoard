@@ -251,13 +251,14 @@ class _BoardState extends ConsumerState<Board> {
       final group = widget.groups[index];
       List<IKanbanBoardGroupItem> items = [];
       for (int itemIndex = 0; itemIndex < group.items.length; itemIndex++) {
+        final builtItem = widget.groupItemBuilder(context, group.id, itemIndex);
         items.add(
           IKanbanBoardGroupItem(
             groupIndex: index,
             id: group.items[itemIndex].id,
             key: GlobalKey(),
-            itemWidget: widget.groupItemBuilder(context, group.id, itemIndex),
-            ghost: widget.groupItemBuilder(context, group.id, itemIndex),
+            itemWidget: builtItem,
+            ghost: builtItem,
             index: itemIndex,
             setState: () => {},
           ),
@@ -326,7 +327,10 @@ class _BoardState extends ConsumerState<Board> {
   @override
   void didUpdateWidget(covariant Board oldWidget) {
     if (oldWidget.groups != widget.groups) {
-      ref.read(_boardStateController).groups = _initializeBoardGroups();
+      final newGroups = _initializeBoardGroups();
+      Future.microtask(() {
+        if (mounted) ref.read(_boardStateController).setGroups(newGroups);
+      });
     }
     super.didUpdateWidget(oldWidget);
   }
