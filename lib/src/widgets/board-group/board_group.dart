@@ -67,6 +67,7 @@ class _BoardGroupState extends ConsumerState<BoardGroup> {
   void _onDragUpdate(Offset draggableOffset, VoidCallback setstate) {
     final boardState = ref.read(widget.boardStateController);
     final draggingState = ref.read(widget.boardStateController).draggingState;
+    if (widget.groupIndex >= boardState.groups.length) return;
     final group = boardState.groups[widget.groupIndex];
     group.setState = setstate;
     if (draggingState.draggableType == DraggableType.none) return;
@@ -116,7 +117,8 @@ class _BoardGroupState extends ConsumerState<BoardGroup> {
   @override
   Widget build(BuildContext context) {
     final group = ref.watch(widget.boardStateController
-        .select((value) => value.groups[widget.groupIndex]));
+        .select((value) => widget.groupIndex < value.groups.length ? value.groups[widget.groupIndex] : null));
+    if (group == null) return const SizedBox.shrink();
     final draggingState = ref.read(widget.boardStateController).draggingState;
 
     return ValueListenableBuilder(
